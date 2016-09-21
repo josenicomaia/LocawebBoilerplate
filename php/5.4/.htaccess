@@ -1,0 +1,2 @@
+AddHandler php54-script .php
+suPHP_ConfigPath /home/LOCAWEB_USER/php/5.4/cgi/

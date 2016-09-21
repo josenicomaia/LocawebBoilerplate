@@ -1,0 +1,2 @@
+AddHandler php56-script .php
+suPHP_ConfigPath /home/LOCAWEB_USER/php/5.6/cgi/
