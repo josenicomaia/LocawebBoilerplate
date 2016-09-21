@@ -1,5 +1,17 @@
 # Locaweb Boilerplate
 
-*Arquivos básicos para hospedagem compartilhada da Locaweb*
+*Configure sua hospedagem compartilhada da Locaweb em um tiro*
 
-Processo para selecionar versão do PHP e suas configurações para a hospedagem compartilhada na Locaweb
+Este projeto tem o objetivo auxiliar a configuração inicial básica em sua hospedagem compartilhada da Locaweb.
+
+* Arquivos de configuração BASH (nem sempre vem por padrão)
+..* Centraliza os binários em $HOME/bin
+
+* Selecionar versão do PHP (CGI e CLI)
+* Configurações do PHP
+..* Especificos para a Locaweb
+..* Configuração de CGI e CLI separadas
+
+* Gera par de chaves RSA
+
+* Instala o composer
