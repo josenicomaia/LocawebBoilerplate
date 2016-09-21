@@ -3,7 +3,10 @@
 VERSAO_PHP=55
 ENV_PHP=production
 
-rm /home/$USER/bin/php
+if [ -f $file ]; then
+    rm /home/$USER/bin/php
+fi
+
 ln -s /home/$USER/bin/$VERSAO_PHP /home/$USER/bin/php
 
 for VERSAO_CONFIG_PHP_DIR in php/*; do
