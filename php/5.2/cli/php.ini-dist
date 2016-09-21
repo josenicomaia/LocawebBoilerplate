@@ -245,14 +245,14 @@ disable_classes =
 ; (e.g. by adding its signature to the Web server header).  It is no security
 ; threat in any way, but it makes it possible to determine whether you use PHP
 ; on your server or not.
-expose_php = On
+expose_php = Off
 
 
 ;;;;;;;;;;;;;;;;;;;
 ; Resource Limits ;
 ;;;;;;;;;;;;;;;;;;;
 
-max_execution_time = 30     ; Maximum execution time of each script, in seconds
+max_execution_time = 60     ; Maximum execution time of each script, in seconds
 max_input_time = 60	; Maximum amount of time each script may spend parsing request data
 ;max_input_nesting_level = 64 ; Maximum input variable nesting level
 memory_limit = 128M      ; Maximum amount of memory a script may consume (128MB)
@@ -436,7 +436,7 @@ register_argc_argv = On
 auto_globals_jit = On
 
 ; Maximum size of POST data that PHP will accept.
-post_max_size = 8M
+post_max_size = 50M
 
 ; Magic quotes
 ;
@@ -472,6 +472,7 @@ default_mimetype = "text/html"
 
 ; UNIX: "/path1:/path2"
 ;include_path = ".:/php/includes"
+include_path = ".:/usr/share/pear"
 ;
 ; Windows: "\path1;\path2"
 ;include_path = ".;c:\php\includes"
@@ -548,6 +549,7 @@ file_uploads = On
 ; Temporary directory for HTTP uploaded files (will use system default if not
 ; specified).
 ;upload_tmp_dir =
+upload_tmp_dir = "/home/camecon/tmp"
 
 ; Maximum allowed size for uploaded files.
 upload_max_filesize = 2M
@@ -701,7 +703,7 @@ define_syslog_variables  = Off
 
 [mail function]
 ; For Win32 only.
-SMTP = localhost
+smtp = localhost
 smtp_port = 25
 
 ; For Win32 only.
@@ -709,6 +711,7 @@ smtp_port = 25
 
 ; For Unix only.  You may supply arguments as well (default: "sendmail -t -i").
 ;sendmail_path =
+sendmail_path = "/usr/sbin/sendmail -t -i"
 
 ; Force the addition of the specified parameters to be passed as extra parameters
 ; to the sendmail binary. These parameters will always replace the value of
@@ -1032,7 +1035,7 @@ session.serialize_handler = php
 ; on each request.
 
 session.gc_probability = 1
-session.gc_divisor     = 100
+session.gc_divisor     = 1000
 
 ; After this number of seconds, stored data will be seen as 'garbage' and
 ; cleaned up by the garbage collection process.
@@ -1099,14 +1102,14 @@ session.hash_function = 0
 ; 4 bits: 0-9, a-f
 ; 5 bits: 0-9, a-v
 ; 6 bits: 0-9, a-z, A-Z, "-", ","
-session.hash_bits_per_character = 4
+session.hash_bits_per_character = 5
 
 ; The URL rewriter will look for URLs in a defined set of HTML tags.
 ; form/fieldset are special; if you include them here, the rewriter will
 ; add a hidden <input> field with the info which is otherwise appended
 ; to URLs.  If you want XHTML conformity, remove the form entry.
 ; Note that all valid entries require a "=", even if no value follows.
-url_rewriter.tags = "a=href,area=href,frame=src,input=src,form=,fieldset="
+url_rewriter.tags = "a=href,area=href,frame=src,input=src,form=fakeentry"
 
 [MSSQL]
 ; Allow or prevent persistent links.
@@ -1277,10 +1280,15 @@ tidy.clean_output = Off
 ; Enables or disables WSDL caching feature.
 soap.wsdl_cache_enabled=1
 ; Sets the directory name where SOAP extension will put cache files.
-soap.wsdl_cache_dir="/tmp"
+soap.wsdl_cache_dir="/home/camecon/tmp"
 ; (time to live) Sets the number of second while cached file will be used 
 ; instead of original one.
 soap.wsdl_cache_ttl=86400
+
+[Verisign Payflow Pro]
+pfpro.defaultport = 443
+pfpro.defaulttimeout = 30
+pfpro.defaulthost = "test-payflow.verisign.com"
 
 ; Local Variables:
 ; tab-width: 4

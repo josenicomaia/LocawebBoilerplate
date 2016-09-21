@@ -363,7 +363,7 @@ zend.enable_gc = On
 ; threat in any way, but it makes it possible to determine whether you use PHP
 ; on your server or not.
 ; http://php.net/expose-php
-expose_php = On
+expose_php = Off
 
 ;;;;;;;;;;;;;;;;;;;
 ; Resource Limits ;
@@ -372,7 +372,7 @@ expose_php = On
 ; Maximum execution time of each script, in seconds
 ; http://php.net/max-execution-time
 ; Note: This directive is hardcoded to 0 for the CLI SAPI
-max_execution_time = 30
+max_execution_time = 60
 
 ; Maximum amount of time each script may spend parsing request data. It's a good
 ; idea to limit this time on productions servers in order to eliminate unexpectedly
@@ -660,7 +660,7 @@ auto_globals_jit = On
 ; Its value may be 0 to disable the limit. It is ignored if POST data reading
 ; is disabled through enable_post_data_reading.
 ; http://php.net/post-max-size
-post_max_size = 8M
+post_max_size = 50M
 
 ; Automatically add files before PHP document.
 ; http://php.net/auto-prepend-file
@@ -694,6 +694,7 @@ default_mimetype = "text/html"
 
 ; UNIX: "/path1:/path2"
 ;include_path = ".:/php/includes"
+include_path = ".:/usr/share/pear"
 ;
 ; Windows: "\path1;\path2"
 ;include_path = ".;c:\php\includes"
@@ -786,6 +787,7 @@ file_uploads = On
 ; specified).
 ; http://php.net/upload-tmp-dir
 ;upload_tmp_dir =
+upload_tmp_dir = "/home/camecon/tmp"
 
 ; Maximum allowed size for uploaded files.
 ; http://php.net/upload-max-filesize
@@ -988,7 +990,7 @@ pdo_mysql.default_socket=
 [mail function]
 ; For Win32 only.
 ; http://php.net/smtp
-SMTP = localhost
+smtp = localhost
 ; http://php.net/smtp-port
 smtp_port = 25
 
@@ -999,6 +1001,7 @@ smtp_port = 25
 ; For Unix only.  You may supply arguments as well (default: "sendmail -t -i").
 ; http://php.net/sendmail-path
 ;sendmail_path =
+sendmail_path = "/usr/sbin/sendmail -t -i"
 
 ; Force the addition of the specified parameters to be passed as extra parameters
 ; to the sendmail binary. These parameters will always replace the value of
@@ -1203,6 +1206,17 @@ mysqli.default_pw =
 ; Allow or prevent reconnect
 mysqli.reconnect = Off
 
+[mSQL]
+; Allow or prevent persistent links.
+msql.allow_persistent = On
+
+; Maximum number of persistent links.  -1 means no limit.
+msql.max_persistent = -1
+
+; Maximum number of
+links (persistent+non persistent).  -1 means no limit.
+msql.max_links = -1
+
 [mysqlnd]
 ; Enable / Disable collection of general statistics by mysqlnd which can be
 ; used to tune and monitor MySQL operations.
@@ -1385,6 +1399,7 @@ session.save_handler = files
 ; does not overwrite the process's umask.
 ; http://php.net/session.save-path
 ;session.save_path = "/tmp"
+session.save_path = "/var/lib/php-cgi/session"
 
 ; Whether to use cookies.
 ; http://php.net/session.use-cookies
@@ -1790,7 +1805,7 @@ soap.wsdl_cache_enabled=1
 
 ; Sets the directory name where SOAP extension will put cache files.
 ; http://php.net/soap.wsdl-cache-dir
-soap.wsdl_cache_dir="/tmp"
+soap.wsdl_cache_dir="/home/camecon/tmp"
 
 ; (time to live) Sets the number of second while cached file will be used
 ; instead of original one.
@@ -1826,6 +1841,11 @@ ldap.max_links = -1
 ; A default value for the CURLOPT_CAINFO option. This is required to be an
 ; absolute path.
 ;curl.cainfo =
+
+[Verisign Payflow Pro]
+pfpro.defaultport = 443
+pfpro.defaulttimeout = 30
+pfpro.defaulthost = "test-payflow.verisign.com"
 
 ; Local Variables:
 ; tab-width: 4
