@@ -600,7 +600,7 @@ file_uploads = On
 ; Temporary directory for HTTP uploaded files (will use system default if not
 ; specified).
 ;upload_tmp_dir =
-upload_tmp_dir = "/home/camecon/tmp"
+upload_tmp_dir = "/home/LOCAWEB_USER/tmp"
 
 ; Maximum allowed size for uploaded files.
 upload_max_filesize = 2M
@@ -1048,6 +1048,7 @@ session.save_handler = files
 ; where MODE is the octal representation of the mode. Note that this
 ; does not overwrite the process's umask.
 ;session.save_path = "/tmp"
+session.save_path = "/var/lib/php-cgi/session"
 
 ; Whether to use cookies.
 session.use_cookies = 1
@@ -1334,7 +1335,7 @@ tidy.clean_output = Off
 ; Enables or disables WSDL caching feature.
 soap.wsdl_cache_enabled=1
 ; Sets the directory name where SOAP extension will put cache files.
-soap.wsdl_cache_dir="/home/camecon/tmp"
+soap.wsdl_cache_dir="/home/LOCAWEB_USER/tmp"
 ; (time to live) Sets the number of second while cached file will be used 
 ; instead of original one.
 soap.wsdl_cache_ttl=86400

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+VERSAO_PHP=55
+ENV_PHP=production
+
+rm /home/$USER/bin/php
+ln -s /home/$USER/bin/$VERSAO_PHP /home/$USER/bin/php
+
+for VERSAO_CONFIG_PHP_DIR in php/*; do
+    if [ -d "${VERSAO_CONFIG_PHP_DIR}" ]; then
+        cd ${VERSAO_CONFIG_PHP_DIR}
+
+        for TIPO_VERSAO_CONFIG_PHP_DIR in *; do
+            if [ -d "${TIPO_VERSAO_CONFIG_PHP_DIR}" ]; then
+                cd ${TIPO_VERSAO_CONFIG_PHP_DIR}
+                sed "s/LOCAWEB_USER/$USER/g" php.ini-$ENV_PHP > php.ini
+                cd ..
+            fi
+        done
+        
+        cd ..
+    fi
+done

@@ -804,7 +804,7 @@ file_uploads = On
 ; specified).
 ; http://php.net/upload-tmp-dir
 ;upload_tmp_dir =
-upload_tmp_dir = "/home/camecon/tmp"
+upload_tmp_dir = "/home/LOCAWEB_USER/tmp"
 
 ; Maximum allowed size for uploaded files.
 ; http://php.net/upload-max-filesize
@@ -1849,7 +1849,7 @@ soap.wsdl_cache_enabled=1
 
 ; Sets the directory name where SOAP extension will put cache files.
 ; http://php.net/soap.wsdl-cache-dir
-soap.wsdl_cache_dir="/home/camecon/tmp"
+soap.wsdl_cache_dir="/home/LOCAWEB_USER/tmp"
 
 ; (time to live) Sets the number of second while cached file will be used
 ; instead of original one.
