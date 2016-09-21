@@ -1,0 +1,2 @@
+AddHandler php7-script .php
+suPHP_ConfigPath /home/LOCAWEB_USER/php/7/cgi/
