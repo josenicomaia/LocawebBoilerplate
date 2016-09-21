@@ -1,2 +1,2 @@
 #!/bin/bash
-php55 -c ~/php/5.2/cli/php.ini "$@"
+/usr/bin/php -c ~/php/5.2/cli/php.ini "$@"
