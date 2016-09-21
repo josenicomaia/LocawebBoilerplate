@@ -7,9 +7,10 @@ if [ -f $file ]; then
     rm /home/$USER/bin/php
 fi
 
-ln -s /home/$USER/bin/$VERSAO_PHP /home/$USER/bin/php
+ln -s /home/$USER/bin/php$VERSAO_PHP /home/$USER/bin/php
+cd php
 
-for VERSAO_CONFIG_PHP_DIR in php/*; do
+for VERSAO_CONFIG_PHP_DIR in *; do
     if [ -d "${VERSAO_CONFIG_PHP_DIR}" ]; then
         cd ${VERSAO_CONFIG_PHP_DIR}
 
