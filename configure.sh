@@ -21,6 +21,11 @@ done
 
 cd -
 
+echo "Gerando chaves RSA"
+
+ssh-keygen -t rsa -f /home/$USER/.ssh/id_rsa -N ""
+cat /home/$USER/.ssh/id_rsa.pub
+
 echo "Instalando composer"
 
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
