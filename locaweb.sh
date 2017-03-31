@@ -37,7 +37,6 @@ instalar_config_bash() {
     cp $SCRIPTPATH/.bash_profile $HOME/.bash_profile
     cp $SCRIPTPATH/.bashrc $HOME/.bashrc
     source ~/.bash_profile
-    source ~/.bashrc
 }
 
 instalar_config_php() {
