@@ -2,16 +2,37 @@
 
 *Configure sua hospedagem compartilhada da Locaweb em um tiro*
 
+## Detalhes
 Este projeto tem o objetivo auxiliar a configuração inicial básica em sua hospedagem compartilhada da Locaweb.
+As configurações do PHP ficam todas na pasta `~/php` de acordo com cada versão disponível.
 
-* Arquivos de configuração BASH (nem sempre vem por padrão)
-    * Centraliza os binários em $HOME/bin
+### Opções
+* Arquivos de configuração Bash padrões
+* Arquivos de configuração PHP padrões com alterações para funcionar na Locaweb
+* Trocar versão do PHP
+* Geração do par de chaves RSA
+* Instalação do Composer
 
-* Selecionar versão do PHP (CGI e CLI)
-* Configurações do PHP
-    * Especificos para a Locaweb
-    * Configuração de CGI e CLI separadas
+## Como Usar
+#### Clonar o repositório
+git clone https://github.com/josenicomaia/LocawebBoilerplate.git
 
-* Gera par de chaves RSA
+#### Instalar tudo
+./LocawebBoilerplate/locaweb.sh instalar <versao_desejada_php>
 
-* Instala o composer
+Executar esse comando é o mesmo que executar `config`, `php`, `keygen` e `composer`.
+
+## Outras opções
+#### Instalar o composer
+./LocawebBoilerplate/locaweb.sh composer
+
+#### Instalar os arquivos de configuração PHP e Bash
+./LocawebBoilerplate/locaweb.sh config
+
+#### Gerar o par de chaves RSA
+./LocawebBoilerplate/locaweb.sh keygen
+
+#### Modificar versão do PHP
+./LocawebBoilerplate/locaweb.sh php <versao_desejada_php>
+
+Obs.: Para executar esse comando é necessário que `config` já tenha sido instalado.
