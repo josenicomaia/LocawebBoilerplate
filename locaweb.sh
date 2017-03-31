@@ -6,7 +6,7 @@ SCRIPTPATH=`pwd -P`
 popd > /dev/null
 
 ajuda() {
-    
+    echo "Ajuda"
 }
 
 composer() {
@@ -24,15 +24,15 @@ ssh_keygen() {
 }
 
 instalar() {
-    composer
-    ssh_keygen
     instalar_config_bash
     instalar_config_php
     trocar_php $1
+    ssh_keygen
+    composer
 }
 
 instalar_config_bash() {
-    echo "Instalando arquivos de configuração do Bash"
+    echo "Instalando arquivos de configuracao do Bash"
     cp $SCRIPTPATH/.bash_logout $HOME/.bash_logout
     cp $SCRIPTPATH/.bash_profile $HOME/.bash_profile
     cp $SCRIPTPATH/.bashrc $HOME/.bashrc
@@ -40,12 +40,25 @@ instalar_config_bash() {
 
 instalar_config_php() {
     ENV_PHP=production
-    echo "Instalando arquivos de configuração do PHP"
+    echo "Instalando arquivos de configuracao do PHP"
+    mkdir -p $HOME/bin
+    cp $SCRIPTPATH/bin/php*.sh $HOME/bin
+    
+    mkdir -p $HOME/php
     cd $SCRIPTPATH/php
     
-    for TIPO_VERSAO_CONFIG_PHP_DIR in *; do
-        if [ -d "${TIPO_VERSAO_CONFIG_PHP_DIR}" ]; then
-            sed "s/LOCAWEB_USER/$USER/g" ${TIPO_VERSAO_CONFIG_PHP_DIR}/php.ini-$ENV_PHP > $HOME/php/${TIPO_VERSAO_CONFIG_PHP_DIR}/php.ini
+    for VERSAO_PHP in *; do
+        if [ -d "${VERSAO_PHP}" ]; then
+            for TIPO in "(cgi cli fpm)"; do
+                if [ -d "$HOME/php/${VERSAO_PHP}/${TIPO}" ]; then
+                    if [ ! -d "$HOME/php/${VERSAO_PHP}/${TIPO}" ]; then
+                        mkdir $HOME/php/${VERSAO_PHP}/${TIPO}
+                    fi
+                    
+                    sed "s/LOCAWEB_USER/$USER/g" ${VERSAO_PHP}/${TIPO}/php.ini-$ENV_PHP > $HOME/php/${VERSAO_PHP}/${TIPO}/php.ini
+                fi
+            done
+            
         fi
     done
     
@@ -53,7 +66,7 @@ instalar_config_php() {
 }
 
 trocar_php() {
-    echo "Trocando versão do PHP"
+    echo "Trocando versao do PHP"
     if [ -f $file ]; then
         rm $HOME/bin/php
     fi
@@ -81,10 +94,10 @@ case "$1" in
     ;;
     
     instalar)
-        instalar $1
+        instalar $2
     ;;
     
     php)
-        trocar_php $1
+        trocar_php $2
     ;;
 esac
