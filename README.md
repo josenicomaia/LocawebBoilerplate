@@ -13,6 +13,14 @@ As configurações do PHP ficam todas na pasta `~/php` de acordo com cada versã
 * Geração do par de chaves RSA
 * Instalação do Composer
 
+### Versões PHP disponíveis
+* 5.2
+* 5.3
+* 5.4
+* 5.5
+* 5.6
+* 7.0
+
 ## Como Usar
 #### Clonar o repositório
 `git clone https://github.com/josenicomaia/LocawebBoilerplate.git`
