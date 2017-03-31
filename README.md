@@ -20,7 +20,7 @@ git clone https://github.com/josenicomaia/LocawebBoilerplate.git
 #### Instalar tudo
 ./LocawebBoilerplate/locaweb.sh instalar <versao_desejada_php>
 
-Executar esse comando é o mesmo que executar `config`, `php`, `keygen` e `composer`.
+Obs.: Executar esse comando é o mesmo que executar `config`, `php`, `keygen` e `composer`.
 
 ## Outras opções
 #### Instalar o composer
