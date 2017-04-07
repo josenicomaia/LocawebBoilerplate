@@ -1502,7 +1502,7 @@ session.save_handler = files
 ; does not overwrite the process's umask.
 ; http://php.net/session.save-path
 ;session.save_path = "/tmp"
-session.save_path = "/var/lib/php-cgi/session"
+session.save_path = "/home/LOCAWEB_USER/tmp"
 
 ; Whether to use cookies.
 ; http://php.net/session.use-cookies
