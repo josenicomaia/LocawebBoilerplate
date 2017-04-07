@@ -50,20 +50,20 @@ instalar_config_php() {
     
     for VERSAO_PHP in *; do
         if [ -d "${VERSAO_PHP}" ]; then
-            for TIPO in "(cgi cli fpm)"; do
-                if [ -d "$HOME/php/${VERSAO_PHP}/${TIPO}" ]; then
+            for TIPO in "cgi" "cli" "fpm"; do
+                if [ -d "${VERSAO_PHP}/${TIPO}" ]; then
                     if [ ! -d "$HOME/php/${VERSAO_PHP}/${TIPO}" ]; then
-                        mkdir $HOME/php/${VERSAO_PHP}/${TIPO}
+                        mkdir -p $HOME/php/${VERSAO_PHP}/${TIPO}
                     fi
-                    
+
                     sed "s/LOCAWEB_USER/$USER/g" ${VERSAO_PHP}/${TIPO}/php.ini-$ENV_PHP > $HOME/php/${VERSAO_PHP}/${TIPO}/php.ini
                 fi
             done
-            
+
         fi
     done
-    
-    cd -
+
+    cd - > /dev/null
 }
 
 trocar_php() {
