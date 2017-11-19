@@ -13,7 +13,7 @@ As configurações do PHP ficam todas na pasta `~/php` de acordo com cada versã
 * Geração do par de chaves RSA
 * Instalação do Composer
 
-### Versões PHP disponíveis
+### Versões PHP disponíveis no script
 * 5.2
 * 5.3
 * 5.4
@@ -21,26 +21,26 @@ As configurações do PHP ficam todas na pasta `~/php` de acordo com cada versã
 * 5.6
 * 7.0
 
-## Como Usar
-#### Clonar o repositório
-`git clone https://github.com/josenicomaia/LocawebBoilerplate.git`
+## Instalar LocawebBoilerplate
+`curl -s "https://raw.githubusercontent.com/josenicomaia/LocawebBoilerplate/master/get.sh" | bash`
 
+### Como Usar
 #### Instalar tudo
-`./LocawebBoilerplate/locaweb.sh instalar <versao_desejada_php>`
+`locaweb instalar <versao_desejada_php>`
 
 Obs.: Executar esse comando é o mesmo que executar `config`, `php`, `keygen` e `composer`.
 
 ## Outras opções
 #### Instalar o composer
-`./LocawebBoilerplate/locaweb.sh composer`
+`locaweb composer`
 
 #### Instalar os arquivos de configuração PHP e Bash
-`./LocawebBoilerplate/locaweb.sh config`
+`locaweb config`
 
 #### Gerar o par de chaves RSA
-`./LocawebBoilerplate/locaweb.sh keygen`
+`locaweb keygen`
 
 #### Modificar versão do PHP
-`./LocawebBoilerplate/locaweb.sh php <versao_desejada_php>`
+`locaweb php <versao_desejada_php>`
 
 Obs.: Para executar esse comando é necessário que `config` já tenha sido instalado.
