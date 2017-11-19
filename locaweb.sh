@@ -6,99 +6,127 @@ SCRIPTPATH=`pwd -P`
 popd > /dev/null
 
 ajuda() {
-    echo "Ajuda"
+    echo "Uso: locaweb <comando> [pametros...]"
+    echo ""
+    echo "Comandos:"
+    echo "  php <versao> [env=production|development]:   Faz o ambiente utilizar a versão desejada do PHP."
+    echo "    Versoes suportadas:"
+    [ -s /usr/bin/php52 ] && echo "     - 5.2"
+    [ -s /usr/bin/php53 ] && echo "     - 5.3"
+    [ -s /usr/bin/php54 ] && echo "     - 5.4"
+    [ -s /usr/bin/php55 ] && echo "     - 5.5"
+    [ -s /usr/bin/php56 ] && echo "     - 5.6"
+    [ -s /usr/bin/php7 ]  && echo "     - 7.0"
+    echo "  composer:                                    Instala o composer."
+    echo "  ssh:                                         Gera um par de chaves para o SSH utilizando RSA."
+    echo "  registrar:                                   Registra o script do LocawebBoilerplate como locaweb."
+    echo "  bash:                                        Instala as configurações padroes do bash (baseado no ubuntu)."
 }
 
-composer() {
-    echo "Instalando composer"
+registrar() {
+    echo "Registrando LocawebBoilerplate..."
+    ln -s $SCRIPTPATH/locaweb.sh /home/$USER/bin/locaweb
+
+    echo "Registrado."
+}
+
+instalar_composer() {
+    echo "Baixando composer..."
     php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+
+    echo "Instalando composer..."
     php composer-setup.php
     php -r "unlink('composer-setup.php');"
+
+    echo "Registrando composer..."
     mv composer.phar $HOME/bin/composer
+
+    echo "Registrado."
 }
 
-ssh_keygen() {
-    echo "Gerando chaves RSA"
-    ssh-keygen -t rsa -f $HOME/.ssh/id_rsa -N ""
-    cat $HOME/.ssh/id_rsa.pub
-}
+gerar_chaves_ssh() {
+    if [ -s $HOME/.ssh/id_rsa ]; then
+        echo "Gerando par de chaves do SSH..."
+        ssh-keygen -t rsa -f $HOME/.ssh/id_rsa -N ""
 
-instalar() {
-    instalar_config_bash
-    instalar_config_php
-    trocar_php $1
-    ssh_keygen
-    composer
+        echo "Chave publica:"
+        cat $HOME/.ssh/id_rsa.pub
+    else
+        echo "Já existe um par de chaves gerado."
+
+        echo "Chave publica:"
+        cat $HOME/.ssh/id_rsa.pub
+    fi
 }
 
 instalar_config_bash() {
-    echo "Instalando arquivos de configuracao do Bash"
+    echo "Instalando arquivos de configuracao do Bash..."
     cp $SCRIPTPATH/.bash_logout $HOME/.bash_logout
     cp $SCRIPTPATH/.bash_profile $HOME/.bash_profile
     cp $SCRIPTPATH/.bashrc $HOME/.bashrc
+
+    echo "Carregando configuracoes..."
     source ~/.bash_profile
+
+    echo "Carregado."
+}
+
+php() {
+    PHP_VERSION=$1
+    PHP_ENV=${2:-production}
+
+    instalar_config_php $PHP_VERSION $PHP_ENV
+
+    if [ -f $HOME/bin/php ]; then
+        rm $HOME/bin/php
+    fi
+
+    echo "Registrando versao do PHP para linha de comando..."
+    cp $SCRIPTPATH/php/$PHP_VERSION/php$PHP_VERSION.sh $HOME/bin/php
+
+    echo "Registrando versao do PHP para WEB..."
+    sed "s/LOCAWEB_USER/$USER/g" $SCRIPTPATH/php/$PHP_VERSION/.htaccess > $HOME/public_html/.htaccess
 }
 
 instalar_config_php() {
-    ENV_PHP=production
-    echo "Instalando arquivos de configuracao do PHP"
-    mkdir -p $HOME/bin
-    cp $SCRIPTPATH/bin/php*.sh $HOME/bin
-    
-    mkdir -p $HOME/php
-    cd $SCRIPTPATH/php
-    
-    for VERSAO_PHP in *; do
-        if [ -d "${VERSAO_PHP}" ]; then
-            for TIPO in "cgi" "cli" "fpm"; do
-                if [ -d "${VERSAO_PHP}/${TIPO}" ]; then
-                    if [ ! -d "$HOME/php/${VERSAO_PHP}/${TIPO}" ]; then
-                        mkdir -p $HOME/php/${VERSAO_PHP}/${TIPO}
-                    fi
+    PHP_VERSION=$1
+    PHP_ENV=${2:-production}
 
-                    sed "s/LOCAWEB_USER/$USER/g" ${VERSAO_PHP}/${TIPO}/php.ini-$ENV_PHP > $HOME/php/${VERSAO_PHP}/${TIPO}/php.ini
-                fi
-            done
+    if [ ! -d $HOME/php/$PHP_VERSION ]; then
+        echo "Instalando arquivos de configuracao do PHP..."
 
-        fi
-    done
+        echo "Copiando configurações do CGI..."
+        mkdir -p $HOME/php/$PHP_VERSION/cgi
+        cp $SCRIPTPATH/php/$PHP_VERSION/cgi/php.ini-$PHP_ENV $HOME/php/$PHP_VERSION/cgi/php.ini
 
-    cd - > /dev/null
-}
-
-trocar_php() {
-    echo "Trocando versao do PHP"
-    if [ -f $file ]; then
-        rm $HOME/bin/php
+        echo "Copiando configurações do CLI..."
+        mkdir -p $HOME/php/$PHP_VERSION/cli
+        sed "s/LOCAWEB_USER/$USER/g" $SCRIPTPATH/$PHP_VERSION/cli/php.ini-$PHP_ENV > $HOME/php/$PHP_VERSION/cli/php.ini
     fi
-    
-    ln -s $HOME/bin/php$1.sh /home/$USER/bin/php
-    sed "s/LOCAWEB_USER/$USER/g" $SCRIPTPATH/php/$1/.htaccess > $HOME/public_html/.htaccess
 }
 
 case "$1" in
     ajuda)
         ajuda
     ;;
-    
-    composer)
-        composer
-    ;;
-    
-    config)
-        instalar_config_bash
-        instalar_config_php
-    ;;
-    
-    keygen)
-        ssh_keygen
-    ;;
-    
-    instalar)
-        instalar $2
-    ;;
-    
+
     php)
-        trocar_php $2
+        php $2 $3
+    ;;
+
+    composer)
+        instalar_composer
+    ;;
+
+    ssh)
+        gerar_chaves_ssh
+    ;;
+
+    registrar)
+        registrar
+    ;;
+
+    bash)
+        instalar_config_bash
     ;;
 esac

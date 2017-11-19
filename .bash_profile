@@ -6,6 +6,5 @@ if [ -f ~/.bashrc ]; then
 fi
 
 # User specific environment and startup programs
-PATH="$HOME/bin:$HOME/.composer/vendor/bin:$HOME/.gems/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.composer/vendor/bin:$HOME/.gems/bin:$PATH"
 export GEM_HOME="/home/$USER/.gems"
-export PATH
