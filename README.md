@@ -24,23 +24,14 @@ As configurações do PHP ficam todas na pasta `~/php` de acordo com cada versã
 ## Instalar LocawebBoilerplate
 `curl -s "https://raw.githubusercontent.com/josenicomaia/LocawebBoilerplate/master/get.sh" | bash`
 
-### Como Usar
-#### Instalar tudo
-`locaweb instalar <versao_desejada_php>`
+#### Modificar versão do PHP
+`locaweb php <versao>`
 
-Obs.: Executar esse comando é o mesmo que executar `config`, `php`, `keygen` e `composer`.
-
-## Outras opções
 #### Instalar o composer
 `locaweb composer`
 
-#### Instalar os arquivos de configuração PHP e Bash
-`locaweb config`
-
 #### Gerar o par de chaves RSA
-`locaweb keygen`
+`locaweb ssh`
 
-#### Modificar versão do PHP
-`locaweb php <versao_desejada_php>`
-
-Obs.: Para executar esse comando é necessário que `config` já tenha sido instalado.
+#### Instalar os arquivos de configuração do Bash (beseado no ubuntu)
+`locaweb bash`
