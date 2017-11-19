@@ -24,6 +24,10 @@ ajuda() {
 }
 
 registrar() {
+    if [ ! -d $HOME/bin ]; then
+        mkdir -p $HOME/bin
+    fi
+
     echo "Registrando LocawebBoilerplate..."
     ln -s $SCRIPTPATH/locaweb.sh /home/$USER/bin/locaweb
 
@@ -94,6 +98,11 @@ instalar_config_php() {
 
     if [ ! -d $HOME/php/$PHP_VERSION ]; then
         echo "Instalando arquivos de configuracao do PHP..."
+
+        if [ ! -d $HOME/tmp ]; then
+            mkdir -p $HOME/tmp
+            chmod 777 $HOME/tmp
+        fi
 
         echo "Copiando configurações do CGI..."
         mkdir -p $HOME/php/$PHP_VERSION/cgi
