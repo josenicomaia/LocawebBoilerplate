@@ -20,6 +20,7 @@ As configurações do PHP ficam todas na pasta `~/php` de acordo com cada versã
 * 5.5
 * 5.6
 * 7.0
+* 7.1
 
 ## Instalar LocawebBoilerplate
 `curl -s "https://raw.githubusercontent.com/josenicomaia/LocawebBoilerplate/master/get.sh" | bash`

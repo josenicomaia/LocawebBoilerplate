@@ -17,6 +17,7 @@ ajuda() {
     [ -s /usr/bin/php55 ] && echo "     - 5.5"
     [ -s /usr/bin/php56 ] && echo "     - 5.6"
     [ -s /usr/bin/php7 ]  && echo "     - 7.0"
+    [ -s /usr/bin/php71 ] && echo "     - 7.1"
     echo "  composer:                                    Instala o composer."
     echo "  ssh:                                         Gera um par de chaves para o SSH utilizando RSA."
     echo "  registrar:                                   Registra o script do LocawebBoilerplate como locaweb."
