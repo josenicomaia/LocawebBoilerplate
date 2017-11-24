@@ -1,9 +1,13 @@
 #!/bin/bash
 
-# Pegar o PATH do script (http://stackoverflow.com/a/4774063/6465636)
-pushd `dirname $0` > /dev/null
-SCRIPTPATH=`pwd -P`
-popd > /dev/null
+# Pegar o PATH do script (https://stackoverflow.com/a/246128/6465636)
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 ajuda() {
     echo "Uso: locaweb <comando> [pametros...]"
@@ -30,7 +34,7 @@ registrar() {
     fi
 
     echo "Registrando LocawebBoilerplate..."
-    ln -s $SCRIPTPATH/locaweb.sh /home/$USER/bin/locaweb
+    ln -s $DIR/locaweb.sh /home/$USER/bin/locaweb
 
     echo "Registrado."
 }
@@ -66,12 +70,12 @@ gerar_chaves_ssh() {
 
 instalar_config_bash() {
     echo "Instalando arquivos de configuracao do Bash..."
-    cp $SCRIPTPATH/.bash_logout $HOME/.bash_logout
-    cp $SCRIPTPATH/.bash_profile $HOME/.bash_profile
-    cp $SCRIPTPATH/.bashrc $HOME/.bashrc
+    cp $DIR/.bash_logout $HOME/.bash_logout
+    cp $DIR/.bash_profile $HOME/.bash_profile
+    cp $DIR/.bashrc $HOME/.bashrc
 
     echo "Carregando configuracoes..."
-    source ~/.bash_profile
+    source $HOME/.bash_profile
 
     echo "Carregado."
 }
@@ -87,10 +91,10 @@ php() {
     fi
 
     echo "Registrando versao do PHP para linha de comando..."
-    cp $SCRIPTPATH/php/$PHP_VERSION/php$PHP_VERSION.sh $HOME/bin/php
+    cp $DIR/php/$PHP_VERSION/php$PHP_VERSION.sh $HOME/bin/php
 
     echo "Registrando versao do PHP para WEB..."
-    sed "s/LOCAWEB_USER/$USER/g" $SCRIPTPATH/php/$PHP_VERSION/.htaccess > $HOME/public_html/.htaccess
+    sed "s/LOCAWEB_USER/$USER/g" $DIR/php/$PHP_VERSION/.htaccess > $HOME/public_html/.htaccess
 }
 
 instalar_config_php() {
@@ -107,11 +111,11 @@ instalar_config_php() {
 
         echo "Copiando configurações do CGI..."
         mkdir -p $HOME/php/$PHP_VERSION/cgi
-        cp $SCRIPTPATH/php/$PHP_VERSION/cgi/php.ini-$PHP_ENV $HOME/php/$PHP_VERSION/cgi/php.ini
+        cp $DIR/php/$PHP_VERSION/cgi/php.ini-$PHP_ENV $HOME/php/$PHP_VERSION/cgi/php.ini
 
         echo "Copiando configurações do CLI..."
         mkdir -p $HOME/php/$PHP_VERSION/cli
-        sed "s/LOCAWEB_USER/$USER/g" $SCRIPTPATH/$PHP_VERSION/cli/php.ini-$PHP_ENV > $HOME/php/$PHP_VERSION/cli/php.ini
+        sed "s/LOCAWEB_USER/$USER/g" $DIR/$PHP_VERSION/cli/php.ini-$PHP_ENV > $HOME/php/$PHP_VERSION/cli/php.ini
     fi
 }
 
