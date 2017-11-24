@@ -111,11 +111,11 @@ instalar_config_php() {
 
         echo "Copiando configurações do CGI..."
         mkdir -p $HOME/php/$PHP_VERSION/cgi
-        cp $DIR/php/$PHP_VERSION/cgi/php.ini-$PHP_ENV $HOME/php/$PHP_VERSION/cgi/php.ini
+        sed "s/LOCAWEB_USER/$USER/g" $DIR/php/$PHP_VERSION/cgi/php.ini-$PHP_ENV > $HOME/php/$PHP_VERSION/cgi/php.ini
 
         echo "Copiando configurações do CLI..."
         mkdir -p $HOME/php/$PHP_VERSION/cli
-        sed "s/LOCAWEB_USER/$USER/g" $DIR/$PHP_VERSION/cli/php.ini-$PHP_ENV > $HOME/php/$PHP_VERSION/cli/php.ini
+        sed "s/LOCAWEB_USER/$USER/g" $DIR/php/$PHP_VERSION/cli/php.ini-$PHP_ENV > $HOME/php/$PHP_VERSION/cli/php.ini
     fi
 }
 
