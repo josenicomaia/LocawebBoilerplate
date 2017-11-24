@@ -41,11 +41,11 @@ registrar() {
 
 instalar_composer() {
     echo "Baixando composer..."
-    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    command php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 
     echo "Instalando composer..."
-    php composer-setup.php
-    php -r "unlink('composer-setup.php');"
+    command php composer-setup.php
+    command php -r "unlink('composer-setup.php');"
 
     echo "Registrando composer..."
     mv composer.phar $HOME/bin/composer
