@@ -98,7 +98,7 @@ php() {
     sed "s/LOCAWEB_USER/$USER/g" $DIR/php/$PHP_VERSION/.htaccess > $HOME/public_html/.htaccess
 
     echo ""
-    php -v
+    command php -v
 }
 
 instalar_config_php() {
