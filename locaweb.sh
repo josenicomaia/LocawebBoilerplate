@@ -54,7 +54,7 @@ instalar_composer() {
 }
 
 gerar_chaves_ssh() {
-    if [ -s $HOME/.ssh/id_rsa ]; then
+    if [ ! -s $HOME/.ssh/id_rsa ]; then
         echo "Gerando par de chaves do SSH..."
         ssh-keygen -t rsa -f $HOME/.ssh/id_rsa -N ""
 
