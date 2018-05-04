@@ -100,8 +100,12 @@ php() {
         fi
 
         echo "Registrando versao do PHP para linha de comando..."
-        cp $DIR/php/$PHP_VERSION/php$PHP_VERSION.sh $HOME/bin/php
+        cp $DIR/php/$PHP_VERSION/cli/php$PHP_VERSION.sh $HOME/bin/php
         chmod +x $HOME/bin/php
+        cp $DIR/php/$PHP_VERSION/cli/phpize$PHP_VERSION.sh $HOME/bin/phpize
+        chmod +x $HOME/bin/phpize
+        cp $DIR/php/$PHP_VERSION/cli/php$PHP_VERSION-config.sh $HOME/bin/php-config
+        chmod +x $HOME/bin/php-config
 
         echo "Registrando versao do PHP para WEB..."
         sed "s/LOCAWEB_USER/$USER/g" $DIR/php/$PHP_VERSION/.htaccess > $HOME/public_html/.htaccess
