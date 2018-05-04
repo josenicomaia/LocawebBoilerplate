@@ -2,11 +2,13 @@
 
 # Pegar o PATH do script (https://stackoverflow.com/a/246128/6465636)
 SOURCE="${BASH_SOURCE[0]}"
+
 while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
   DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
   SOURCE="$(readlink "$SOURCE")"
   [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
 done
+
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 ajuda() {
@@ -45,12 +47,16 @@ instalar_composer() {
 
     echo "Instalando composer..."
     command php composer-setup.php
+
+    if [ $? -eq 0 ]; then
+        echo "Registrando composer..."
+        mv composer.phar $HOME/bin/composer
+
+        echo "Registrado."
+    fi
+
+    echo "Apagando instalador..."
     command php -r "unlink('composer-setup.php');"
-
-    echo "Registrando composer..."
-    mv composer.phar $HOME/bin/composer
-
-    echo "Registrado."
 }
 
 gerar_chaves_ssh() {
@@ -84,21 +90,26 @@ php() {
     PHP_VERSION=$1
     PHP_ENV=${2:-production}
 
+    echo "Versão selecionada do PHP: $PHP_VERSION"
     instalar_config_php $PHP_VERSION $PHP_ENV
 
-    if [ -f $HOME/bin/php ]; then
-        rm $HOME/bin/php
+    if [ -d $DIR/php/$PHP_VERSION ]; then
+        if [ -f $HOME/bin/php ]; then
+            rm $HOME/bin/php
+        fi
+
+        echo "Registrando versao do PHP para linha de comando..."
+        cp $DIR/php/$PHP_VERSION/php$PHP_VERSION.sh $HOME/bin/php
+        chmod +x $HOME/bin/php
+
+        echo "Registrando versao do PHP para WEB..."
+        sed "s/LOCAWEB_USER/$USER/g" $DIR/php/$PHP_VERSION/.htaccess > $HOME/public_html/.htaccess
+
+        echo ""
+        command php -v
+    else
+        echo "Configurações não encontradas!"
     fi
-
-    echo "Registrando versao do PHP para linha de comando..."
-    cp $DIR/php/$PHP_VERSION/php$PHP_VERSION.sh $HOME/bin/php
-    chmod +x $HOME/bin/php
-
-    echo "Registrando versao do PHP para WEB..."
-    sed "s/LOCAWEB_USER/$USER/g" $DIR/php/$PHP_VERSION/.htaccess > $HOME/public_html/.htaccess
-
-    echo ""
-    command php -v
 }
 
 instalar_config_php() {
