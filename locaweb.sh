@@ -36,7 +36,7 @@ registrar() {
     fi
 
     echo "Registrando LocawebBoilerplate..."
-    ln -s $DIR/locaweb.sh /home/$USER/bin/locaweb
+    ln -s $DIR/locaweb.sh /home/$USER/bin/lw
 
     echo "Registrado."
 }
@@ -79,6 +79,7 @@ instalar_config_bash() {
     cp $DIR/.bash_logout $HOME/.bash_logout
     cp $DIR/.bash_profile $HOME/.bash_profile
     cp $DIR/.bashrc $HOME/.bashrc
+    cp $DIR/.bash_aliases $HOME/.bash_aliases
 
     echo "Carregando configuracoes..."
     source $HOME/.bash_profile
