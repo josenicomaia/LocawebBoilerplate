@@ -99,7 +99,7 @@ php() {
             rm $HOME/bin/php
         fi
 
-        echo "Registrando versao do PHP para linha de comando..."
+        echo "Registrando versao do PHP para linha de comando (CLI)..."
         cp $DIR/php/$PHP_VERSION/cli/php$PHP_VERSION.sh $HOME/bin/php
         chmod +x $HOME/bin/php
         cp $DIR/php/$PHP_VERSION/cli/phpize$PHP_VERSION.sh $HOME/bin/phpize
@@ -107,8 +107,10 @@ php() {
         cp $DIR/php/$PHP_VERSION/cli/php$PHP_VERSION-config.sh $HOME/bin/php-config
         chmod +x $HOME/bin/php-config
 
-        echo "Registrando versao do PHP para WEB..."
+        echo "Registrando versao do PHP para WEB (CGI)..."
         sed "s/LOCAWEB_USER/$USER/g" $DIR/php/$PHP_VERSION/.htaccess > $HOME/public_html/.htaccess
+        cp $DIR/php/$PHP_VERSION/cgi/php$PHP_VERSION-cgi.sh $HOME/bin/php-cgi
+        chmod +x $HOME/bin/php-cgi
 
         echo ""
         command php -v
