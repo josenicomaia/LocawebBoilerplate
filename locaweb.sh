@@ -35,15 +35,20 @@ lw_ajuda() {
     echo "  bash:                                        Instala as configurações padroes do bash (baseado no ubuntu)."
 }
 
-lw_registrar() {
-    if [ ! -d $HOME/bin ]; then
-        mkdir -p $HOME/bin
+lw_gerar_chaves_ssh() {
+    if [ ! -s $HOME/.ssh/id_rsa ]; then
+        echo "Gerando par de chaves do SSH..."
+        ssh-keygen -t rsa -f $HOME/.ssh/id_rsa -N ""
+
+        echo ""
+        echo "Chave publica:"
+        cat $HOME/.ssh/id_rsa.pub
+    else
+        echo "Já existe um par de chaves gerado."
+        echo ""
+        echo "Chave publica:"
+        cat $HOME/.ssh/id_rsa.pub
     fi
-
-    echo "Registrando LocawebBoilerplate..."
-    ln -s $LW_DIR/locaweb.sh /home/$USER/bin/lw
-
-    echo "Registrado."
 }
 
 lw_instalar_composer() {
@@ -64,22 +69,6 @@ lw_instalar_composer() {
     command php -r "unlink('composer-setup.php');"
 }
 
-lw_gerar_chaves_ssh() {
-    if [ ! -s $HOME/.ssh/id_rsa ]; then
-        echo "Gerando par de chaves do SSH..."
-        ssh-keygen -t rsa -f $HOME/.ssh/id_rsa -N ""
-
-        echo ""
-        echo "Chave publica:"
-        cat $HOME/.ssh/id_rsa.pub
-    else
-        echo "Já existe um par de chaves gerado."
-        echo ""
-        echo "Chave publica:"
-        cat $HOME/.ssh/id_rsa.pub
-    fi
-}
-
 lw_instalar_config_bash() {
     echo "Instalando arquivos de configuracao do Bash..."
     cp $LW_DIR/.bash_logout $HOME/.bash_logout
@@ -91,6 +80,37 @@ lw_instalar_config_bash() {
     source $HOME/.bash_profile
 
     echo "Carregado."
+}
+
+lw_instalar_config_php() {
+    PHP_VERSION=${1-"7.1"}
+    PHP_ENV=${2-"production"}
+
+    if [ ! -d $HOME/php/$PHP_VERSION ]; then
+        echo "Instalando arquivos de configuracao do PHP..."
+
+        if [ ! -d $HOME/tmp ]; then
+            mkdir -p $HOME/tmp
+            chmod 777 $HOME/tmp
+        fi
+
+        echo "Copiando configurações do CGI..."
+        mkdir -p $HOME/php/$PHP_VERSION/cgi
+        sed "s/LOCAWEB_USER/$USER/g" $LW_DIR/php/$PHP_VERSION/cgi/php.ini-$PHP_ENV > $HOME/php/$PHP_VERSION/cgi/php.ini
+
+        echo "Copiando configurações do CLI..."
+        mkdir -p $HOME/php/$PHP_VERSION/cli
+        sed "s/LOCAWEB_USER/$USER/g" $LW_DIR/php/$PHP_VERSION/cli/php.ini-$PHP_ENV > $HOME/php/$PHP_VERSION/cli/php.ini
+    fi
+}
+
+lw_instalar_go() {
+    echo "Baixando GO..."
+    curl -o go1.10.3.linux-amd64.tar.gz "https://dl.google.com/go/go1.10.3.linux-amd64.tar.gz"
+    echo "Instalando GO..."
+    tar -xzf go1.10.3.linux-amd64.tar.gz
+    echo "Apagando instalador..."
+    rm go1.10.3.linux-amd64.tar.gz
 }
 
 lw_php() {
@@ -127,32 +147,21 @@ lw_php() {
         chmod +x $HOME/bin/php-cgi
 
         echo ""
-command php -v
+        command php -v
     else
         echo "Configurações não encontradas!"
     fi
 }
 
-lw_instalar_config_php() {
-    PHP_VERSION=${1-"7.1"}
-    PHP_ENV=${2-"production"}
-
-    if [ ! -d $HOME/php/$PHP_VERSION ]; then
-        echo "Instalando arquivos de configuracao do PHP..."
-
-        if [ ! -d $HOME/tmp ]; then
-            mkdir -p $HOME/tmp
-            chmod 777 $HOME/tmp
-        fi
-
-        echo "Copiando configurações do CGI..."
-        mkdir -p $HOME/php/$PHP_VERSION/cgi
-        sed "s/LOCAWEB_USER/$USER/g" $LW_DIR/php/$PHP_VERSION/cgi/php.ini-$PHP_ENV > $HOME/php/$PHP_VERSION/cgi/php.ini
-
-        echo "Copiando configurações do CLI..."
-        mkdir -p $HOME/php/$PHP_VERSION/cli
-        sed "s/LOCAWEB_USER/$USER/g" $LW_DIR/php/$PHP_VERSION/cli/php.ini-$PHP_ENV > $HOME/php/$PHP_VERSION/cli/php.ini
+lw_registrar() {
+    if [ ! -d $HOME/bin ]; then
+        mkdir -p $HOME/bin
     fi
+
+    echo "Registrando LocawebBoilerplate..."
+    ln -s $LW_DIR/locaweb.sh /home/$USER/bin/lw
+
+    echo "Registrado."
 }
 
 case "$1" in
@@ -179,6 +188,10 @@ case "$1" in
     bash)
         lw_instalar_config_bash
     ;;
+
+    go)
+        lw_instalar_go
+    ;;
 esac
 
 # Limpando as variáveis e funções do SCRIPT
@@ -187,6 +200,7 @@ unset lw_ajuda
 unset lw_instalar_composer
 unset lw_instalar_config_bash
 unset lw_instalar_config_php
+unset lw_instalar_go
 unset lw_gerar_chaves_ssh
 unset lw_php
 unset lw_registrar
