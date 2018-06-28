@@ -36,3 +36,6 @@ As configurações do PHP ficam todas na pasta `~/php` de acordo com cada versã
 
 #### Instalar os arquivos de configuração do Bash (beseado no ubuntu)
 `lw bash`
+
+#### Instalar o GO
+`lw go`
