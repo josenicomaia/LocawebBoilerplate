@@ -33,6 +33,7 @@ lw_ajuda() {
     echo "  ssh:                                         Gera um par de chaves para o SSH utilizando RSA."
     echo "  registrar:                                   Registra o script do LocawebBoilerplate como locaweb."
     echo "  bash:                                        Instala as configurações padroes do bash (baseado no ubuntu)."
+    echo "  go:                                          Instala o GO."
 }
 
 lw_gerar_chaves_ssh() {
