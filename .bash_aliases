@@ -22,3 +22,7 @@ alias t='tail -100f'
 function ccd() {
     cd $(dirname $(readlink -e $1))
 }
+
+# Paliativo Locaweb
+alias php='. php'
+alias composer='php ~/bin/composer'
