@@ -54,10 +54,10 @@ lw_gerar_chaves_ssh() {
 
 lw_instalar_composer() {
     echo "Baixando composer..."
-    command php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    . php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 
     echo "Instalando composer..."
-    command php composer-setup.php
+    . php composer-setup.php
 
     if [ $? -eq 0 ]; then
         echo "Registrando composer..."
@@ -67,7 +67,7 @@ lw_instalar_composer() {
     fi
 
     echo "Apagando instalador..."
-    command php -r "unlink('composer-setup.php');"
+    . php -r "unlink('composer-setup.php');"
 }
 
 lw_instalar_config_bash() {
