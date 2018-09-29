@@ -26,16 +26,16 @@ As configurações do PHP ficam todas na pasta `~/php` de acordo com cada versã
 `curl -s "https://raw.githubusercontent.com/josenicomaia/LocawebBoilerplate/master/get.sh" | bash`
 
 #### Modificar versão do PHP
-`lw php <versao>`
+`. lw php <versao>`
 
 #### Instalar o composer
-`lw composer`
+`. lw composer`
 
 #### Gerar o par de chaves RSA
-`lw ssh`
+`. lw ssh`
 
 #### Instalar os arquivos de configuração do Bash (beseado no ubuntu)
-`lw bash`
+`. lw bash`
 
 #### Instalar o GO
-`lw go`
+`. lw go`
