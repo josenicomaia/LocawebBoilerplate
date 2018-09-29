@@ -24,5 +24,6 @@ function ccd() {
 }
 
 # Paliativo Locaweb
-alias php='. php'
 alias composer='php ~/bin/composer'
+alias php='. php'
+alias lw='. lw'
