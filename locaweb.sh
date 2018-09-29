@@ -166,10 +166,6 @@ lw_registrar() {
 }
 
 case "$1" in
-    ajuda)
-        lw_ajuda
-    ;;
-
     php)
         lw_php $2 $3
     ;;
@@ -192,6 +188,10 @@ case "$1" in
 
     go)
         lw_instalar_go
+    ;;
+
+    *)
+        lw_ajuda
     ;;
 esac
 
